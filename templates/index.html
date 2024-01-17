@@ -13,11 +13,12 @@
         {% endif %}
     </head>
     <body>
+
+        <!-- 上方的MenuBar 开始 -->
         <div class="ui top horizental inverted huge sidebar menu visible"> 
             <div class="item">Logo</div>    
             <!-- -->
             <div style="direction: rtl; width:100%">
-
                 <div style="width:fit-content; display:flex; direction:ltr">
                     <a class="item" onmousemove="MenuBarItemOver(this)"; onmouseout="MenuBarItemOut(this)"
                         href="/">
@@ -36,12 +37,20 @@
                         上传结果
                     </a>
                 </div>
-            
             </div>
+            <script type="text/javascript">
+                function MenuBarItemOver(obj) {
+                    obj.className = "active item";
+                };
+                function MenuBarItemOut(obj) {
+                    obj.className = "item";
+                };
+            </script>
         </div>
+        <!-- 上方的MenuBar 结束 -->
 
 
-        <!-- 登录/注册modal -->
+        <!-- 登录/注册 modal 开始 -->
         <div id="login_register_modal" class="ui modal">
             <div class="ui two item stackable tabs menu">
                 <a class="active item" data-tab="login_tab" id="login_tab_mitem" onclick="activeLoginTab();">
@@ -129,21 +138,12 @@
                     $("#login_tab").removeClass("active");
                     $("#login_tab_mitem").removeClass("active");
                 };
+                function login_register() {
+                    $("#login_register_modal").modal("show");
+                }
             </script>
-
         </div>
+        <!-- 登录/注册 modal 结束 -->
 
-
-        <script type="text/javascript">
-            function MenuBarItemOver(obj) {
-                obj.className = "active item";
-            };
-            function MenuBarItemOut(obj) {
-                obj.className = "item";
-            };
-            function login_register() {
-                $("#login_register_modal").modal("show");
-            }
-        </script>
     </body>
 </html>
