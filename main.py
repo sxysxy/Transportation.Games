@@ -96,4 +96,6 @@ def markdown_of_rank_page():
     return get_markdown_content(RANK_PAGE_MARKDOWN_FILENAME)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=12345, debug=True)
+    app.run(host='0.0.0.0',
+            port=12345, debug=True,
+            ssl_context=None)   # 如果有SSL证书了可以整上去，没就算了
