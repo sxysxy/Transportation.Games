@@ -24,7 +24,15 @@ pip install -r requirements.txt
 
 ### SQL数据库准备
 
-（待完善）
+在mysql数据库运行sql语句建库
+```
+CREATE DATABASE TranportationGames
+    DEFAULT CHARACTER SET = 'utf8mb4';
+```
+将main.py中创建引擎的相关信息替换为Mysql连接信息
+```
+engine = create_engine('mysql+pymysql://user:password@localhost:3306/TransportationGames')
+```
 
 ### 服务端程序运行
 
