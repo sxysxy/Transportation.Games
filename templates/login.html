@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"> 
+    <title>Login Required</title>
+    <script src="static/js/jquery-3.6.3.min.js"></script>
+    <script src="static/js/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/semantic.css">
+
+    {% if is_mobile %} 
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"> 
+    {% endif %}
+    <script type="text/javascript" src="head.js"></script>
+</head>
+<body>
+
+<!-- 登录/注册 modal 开始 -->
+<div id="login_register_modal" class="ui modal">
+    <div class="ui two item stackable tabs menu">
+        <a class="active item" data-tab="login_tab" id="login_tab_mitem" onclick="activeLoginTab();">
+            登录
+        </a>
+        <a class="item" data-tab="register_tab" id="register_tab_mitem" onclick="activeRegisterTab();">
+            注册
+        </a>
+    </div>
+    <div class="ui active tab" data-tab="login_tab" id="login_tab">
+        <form class="ui large form" action="/login" method="post">
+            <div class="ui existing segment">
+                <!-- username -->
+                <div class="field">
+                    <div class="ui left input">
+                        <input id="login_username" name="username" placeholder="用户名" type="text" required>
+                    </div>
+                </div>
+    
+                <!-- password -->
+                <div class="field">
+                    <div class="ui left input">
+                        <input id="login_password" name="password" placeholder="密码" type="password" required>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <button type="submit" class="ui fluid primary button">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="ui tab" data-tab="register_tab" id="register_tab">
+        <form class="ui large form" action="/register" method="post">
+            <div class="ui existing segment">
+                <!-- username -->
+                <div class="field">
+                    <div class="ui left input">
+                        <input id="register_username" name="username" placeholder="用户名" type="text" required>
+                    </div>
+                </div>
+    
+                <!-- password -->
+                <div class="field">
+                    <div class="ui left input">
+                        <input id="register_password" name="password" type="password" placeholder="密码" required>
+                    </div>
+                </div>
+    
+                <!-- confirm password -->
+                <div class="field">
+                    <div class="ui left input">
+                        <input id="register_password_confirm" name="password_confirm" type="password" placeholder="确认密码" required>
+                    </div>
+                </div>
+    
+                <!-- email -->
+                <div class="field">
+                    <div class="ui left input">
+                        <input id="register_email" name="email" placeholder="电子邮件" type="text" required>
+                    </div>
+                </div>
+    
+                <div class="field">
+                    <button type="submit" class="ui fluid primary button">注册</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        function activeLoginTab() {
+            $("#login_tab").addClass("active");
+            $("#login_tab_mitem").addClass("active");
+            
+            $("#register_tab").removeClass("active");
+            $("#register_tab_mitem").removeClass("active");
+        };
+        function activeRegisterTab() {
+            $("#register_tab").addClass("active");
+            $("#register_tab_mitem").addClass("active");
+            
+            $("#login_tab").removeClass("active");
+            $("#login_tab_mitem").removeClass("active");
+        };
+        function login_register() {
+            $("#login_register_modal").modal("show");
+        }
+    </script>
+</div>
+</body>
+</html>
+<!-- 登录/注册 modal 结束 -->
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // 当文档加载完毕时，显示登录模态框
+        $("#login_register_modal").modal("show");
+    });
+</script>
+
+</body>
+</html>

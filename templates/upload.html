@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="utf-8"> 
+    <title>Transportation Game</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <script src="static/js/jquery-3.6.3.min.js"></script>
+    <script src="static/js/semantic.js"></script>
+    <script src="static/js/head.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/semantic.css">
+
+    {% if is_mobile %} 
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"> 
+    {% endif %}
+    <script type="text/javascript" src="head.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        #container {
+            width: 60%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        #header {
+            background-color: #020202;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        #questiontext, #questionpic, #content {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        #questiontext {
+            background-color: #f9f9f9;
+            text-align: left; 
+        }
+        
+        #questionpic {
+            background-color: #f2f2f2;
+            text-align: left; 
+        }
+        
+        #content {
+            background-color: #ffffff;
+            height: 200px;
+        }
+
+
+        .input-field {
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 10px;
+            box-sizing: border-box; /* Makes sure the padding doesn't affect the total width */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="header">
+            <h3 style="margin-bottom:0;">结果上传</h3>
+        </div>
+
+        <div id="questiontext">
+            <b>输入要查询的文字内容</b><br>
+            <input type="text" id="textInput" class="input-field" placeholder="请输入文字...">
+        </div>
+
+        <div id="questionpic">
+            <b>输入要查询的图片内容</b><br>
+            <input type="file" id="fileInput" class="input-field">
+        </div>
+
+        <div id="content">
+            <b>生成答案</b><br>
+            <textarea id="outputArea" placeholder="答案将在此显示..." rows="8" cols="110"></textarea>
+        </div>
+    </div>
+
+</body>
+</html>
