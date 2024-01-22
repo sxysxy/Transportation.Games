@@ -40,7 +40,6 @@ def upload():
     if 'logged_in' in flask.session and flask.session['logged_in']:
         return flask.render_template("upload.html")
     else:
-        # 如果用户未登录，返回一个包含登录页面的特殊HTML
         return flask.render_template("login.html")
 
     #return flask.render_template("upload.html")
