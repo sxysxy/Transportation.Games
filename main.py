@@ -144,10 +144,10 @@ if __name__ == "__main__":
         from gevent import pywsgi, monkey
         monkey.patch_all()
         
-        server = pywsgi.WSGIServer((args.host, args.port), app, 
-                                    ssl_args={
-                                       "ssl_context" : (args.ssl_cert, args.ssl_key) if args.enable_ssl else None
-                                    })
+        if args.enable_ssl:
+            server = pywsgi.WSGIServer((args.host, args.port), app, keyfile=args.ssl_key, certfile=args.ssl_cert)
+        else:
+            server = pywsgi.WSGIServer((args.host, args.port), app)
         server.serve_forever()
         
        

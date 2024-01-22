@@ -12,7 +12,7 @@ document.writeln("");
 document.writeln("        {% if is_mobile %} ");
 document.writeln("        <meta name=\'viewport\' content=\'width=device-width,height=device-height,initial-scale=1\'> ");
 document.writeln("        {% endif %}");
-document.writeln("        <script type=\'text/javascript\' src=\'head.js\'></script>");
+//document.writeln("        <script type=\'text/javascript\' src=\'head.js\'></script>");
 document.writeln("    </head>");
 document.writeln("    <body>");
 document.writeln("");
