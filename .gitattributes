@@ -1,0 +1,5 @@
+static/css/semantic.css linguist-vendored
+static/css/themes/* linguist-vendored
+static/js/components/* linguist-vendored
+static/js/jquery-3.6.3.min.js linguist-vendored
+static/js/semantic.js linguist-vendored

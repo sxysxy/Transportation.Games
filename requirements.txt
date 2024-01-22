@@ -1,4 +1,4 @@
-Flask 
-markdown2
+Flask>=2.3
+markdown2>=2.4
 pyopenssl
-gevent
+gevent>=23.9

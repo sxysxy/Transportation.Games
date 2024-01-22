@@ -1,26 +1,26 @@
 # Transportation.Games
-Source code of transportation.games(website) for paper <a href="https://arxiv.org/abs/2401.04471">TransportationGames: Benchmarking Transportation Knowledge of Multimodal Large Language Models</a>
+论文 <a href="https://arxiv.org/abs/2401.04471">TransportationGames: Benchmarking Transportation Knowledge of Multimodal Large Language Models</a> 的宣传网站的源代码
 
-# Setup 
+# 下载&安装
 
 ```
 git clone git@github.com:sxysxy/Transportation.Games.git 
 ```
 
-or 
+或者使用HTTPS方式clone 
 
 ```
 git clone https://github.com/sxysxy/Transportation.Games.git
 ```
 
-then
+然后准备一个虚拟环境，python版本可以使用3.11（仅供参考）
 
 ```
 conda activate your_virtual_env
 pip install -r requirements.txt
 ```
 
-# Run
+# 运行
 
 ### SQL数据库准备
 
@@ -28,21 +28,21 @@ pip install -r requirements.txt
 
 ### 服务端程序运行
 
-For developing environment:
+在开发与调试环境下：
 
 ```
 python main.py
 ```
 
-The default port is 12345
+默认网络端口是12345
 
-For productive environment:
+如果是生产环境中：
 
 ```
 python main.py --product-env y
 ```
 
-This will enable gevent.monkey.patch_all() and use a WSGIServer to run the flask app, the default port is 80 or 443(if SSL/TLS is enabled)
+指定该参数则会使用gevent.monkey.patch_all()和WSGIServer来提高Flask App的性能。默认的端口也会变成80或者443（取决于你是否开启了HTTPS支持）
 
 
 # 内容定制
@@ -69,4 +69,17 @@ This will enable gevent.monkey.patch_all() and use a WSGIServer to run the flask
 <tr><td>--sql-passwd</td><td>SQL用户密码</td><td>空，需要指定</td></tr>
 <tr><td>--sql-dbname</td><td>SQL数据库库名</td><td>TransportationGame</td></tr>
 </tbody>
+</table>
+
+# 开源软件协议
+
+本网站项目使用的开源软件协议是LGPL-3。您可以自由地、免费地使用该项目，但如果基于本项目的开源程序代码公开发布新的项目，则必须同样以LGPL-3协议开源。
+
+此外，以下是源代码内嵌在本项目内的其他开源程序代码：
+
+<table>
+<tbody>
+<tr> <td>jquery</td> </td> <td> MIT协议 </td> </tr>
+<tr> <td>Semantic-UI</td> <td> MIT协议 </tr>
+</tobyd>
 </table>
