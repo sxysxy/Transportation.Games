@@ -1,6 +1,7 @@
 import flask
 import markdown2
 import os
+import argparse
 
 import secrets
 my_secret_key = secrets.token_urlsafe(16)
@@ -96,6 +97,41 @@ def markdown_of_rank_page():
     return get_markdown_content(RANK_PAGE_MARKDOWN_FILENAME)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',
-            port=12345, debug=True,
-            ssl_context=None)   # 如果有SSL证书了可以整上去，没就算了
+    argps = argparse.ArgumentParser()
+    argps.add_argument("--host", default="0.0.0.0", help="Default = 0.0.0.0, listen to all loop-back addresses.")
+    argps.add_argument("--port", default=None, type=int, help="If product-env is false, port = 12345, otherwise port = 80 or 443(if enable-ssl)")
+    argps.add_argument("--product-env", type=lambda x : x in ['y', 'Y'], default=False)  # 是否是生产环境，默认是开发&开发环境
+    argps.add_argument("--enable-ssl", default=False, action='store_true', help="If true, please specific ssl-cert and ssl-key")
+    argps.add_argument("--ssl-cert", type=str, default=None, help="Path to SSL cert.pem")  # SSL证书文件
+    argps.add_argument("--ssl-key", type=str, default=None, help="Path to SSL key.pem")    # SSL证书文件
+    args = argps.parse_args()
+    
+    if args.port is None:
+        if args.enable_ssl:
+            args.port = 443
+        else:
+            args.port = 80
+    
+    if not args.product_env: 
+    
+        app.run(host=args.host,
+                port=args.port, debug=True,
+                ssl_context=None)   # 如果有SSL证书了可以整上去，没就算了
+    
+    else:
+        http_prefix = "https" if args.enable_ssl else "http"
+        if args.host == "0.0.0.0":
+            print(f"Start server on {http_prefix}://localhost:{args.port}")
+        else:
+            print(f"Start server on {http_prefix}://{args.host}:{args.port}")
+            
+        print("------- Start WSGI Server -------")
+        
+        from gevent import pywsgi, monkey
+        monkey.patch_all()
+        
+        server = pywsgi.WSGIServer((args.host, args.port), app)
+        server.serve_forever()
+        
+       
+        
