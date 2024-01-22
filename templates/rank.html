@@ -17,19 +17,19 @@
     </head>
     <body>
         <div id="page1"></div>  
-        <!-- 主页内容 开始-->
-         <div class="ui main container" id="main_page_container"">
-            <div id="main_page_content">
+        <!-- 排行榜内容 开始-->
+        <div class="ui main container" id="rank_page_container"">
+            <div id="rank_page_content">
 
             </div>
             <script type="text/javascript">
-                $("#main_page_content").ready(function(){
-                    $("#main_page_content").load("/markdown_of_main_page");
-                    $("#main_page_content").css("margin-top", $("#menubar").height() * 1.1 );
+                $("#rank_page_content").ready(function(){
+                    $("#rank_page_content").load("/markdown_of_rank_page");
+                    $("#rank_page_content").css("margin-top", $("#menubar").height() * 1.1 );
                 });
             </script>
         </div>
-        <!-- 主页内容 结束 -->       
+        <!-- 排行榜内容 结束 --> 
     </body>
 
      
