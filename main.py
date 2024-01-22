@@ -101,22 +101,36 @@ if __name__ == "__main__":
     argps.add_argument("--host", default="0.0.0.0", help="Default = 0.0.0.0, listen to all loop-back addresses.")
     argps.add_argument("--port", default=None, type=int, help="If product-env is false, port = 12345, otherwise port = 80 or 443(if enable-ssl)")
     argps.add_argument("--product-env", type=lambda x : x in ['y', 'Y'], default=False)  # 是否是生产环境，默认是开发&开发环境
-    argps.add_argument("--enable-ssl", default=False, action='store_true', help="If true, please specific ssl-cert and ssl-key")
+    argps.add_argument("--enable-ssl", default=False, type=lambda x : x in ['y', 'Y'], help="If true, please specific ssl-cert and ssl-key")
     argps.add_argument("--ssl-cert", type=str, default=None, help="Path to SSL cert.pem")  # SSL证书文件
     argps.add_argument("--ssl-key", type=str, default=None, help="Path to SSL key.pem")    # SSL证书文件
+    argps.add_argument("--sql-server", type=str, default="localhost:3306")
+    argps.add_argument("--sql-engine", type=str, default=None)
+    argps.add_argument("--sql-user", type=str, default=None)
+    argps.add_argument("--sql-passwd", type=str, default=None)
+    argps.add_argument("--sql-dbname", type=str, default="TransportationGame")
+    
     args = argps.parse_args()
+    
+    if not all([args.sql_engine, args.sql_user, args.sql_passwd]):
+        print("Warning: Missing SQL configuration, some function is disabled.")
     
     if args.port is None:
         if args.enable_ssl:
             args.port = 443
         else:
             args.port = 80
+            
+    if args.enable_ssl:
+        if not all([args.ssl_cert, args.ssl_key]):
+            print("[ABORTED] Error: --ssl-key or --ssl-cert is not set.")
+            exit(1)
     
     if not args.product_env: 
     
         app.run(host=args.host,
                 port=args.port, debug=True,
-                ssl_context=None)   # 如果有SSL证书了可以整上去，没就算了
+                ssl_context=(args.ssl_cert, args.ssl_key) if args.enable_ssl else None)   # 如果有SSL证书了可以整上去，没就算了
     
     else:
         http_prefix = "https" if args.enable_ssl else "http"
@@ -130,7 +144,10 @@ if __name__ == "__main__":
         from gevent import pywsgi, monkey
         monkey.patch_all()
         
-        server = pywsgi.WSGIServer((args.host, args.port), app)
+        server = pywsgi.WSGIServer((args.host, args.port), app, 
+                                    ssl_args={
+                                       "ssl_context" : (args.ssl_cert, args.ssl_key) if args.enable_ssl else None
+                                    })
         server.serve_forever()
         
        
