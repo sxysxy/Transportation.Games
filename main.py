@@ -121,10 +121,13 @@ if __name__ == "__main__":
      
     
     if args.port is None:
-        if args.enable_ssl:
-            args.port = 443
+        if args.product_env:
+            if args.enable_ssl:
+                args.port = 443
+            else:
+                args.port = 80
         else:
-            args.port = 80
+            args.port = 12345
             
     if args.enable_ssl:
         if not all([args.ssl_cert, args.ssl_key]):
