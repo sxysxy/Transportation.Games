@@ -2,5 +2,5 @@ Flask>=2.3
 markdown2>=2.4
 pyopenssl
 gevent>=23.9
-mysql
 SQLAlchemy
+pymysql
