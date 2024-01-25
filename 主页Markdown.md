@@ -25,7 +25,7 @@
 - 交通应急预案生成（T9）：针对用户提出的不同场景，模型需要能生成合理的应急预案；
 - 交通安全教育文案生成（T10）：针对用户给出的不同受众群体和安全教育场景，模型需要能生成合理有用的安全教育文案；
 
-<img src="./static/figures/p2-v3.jpeg" style="max-width:100%; scale:50%; display:block; margin-left:auto; margin-right:auto; margin-top:-12%; margin-bottom: -12.5%">
+<img src="./static/figures/P2-v3.jpeg" style="max-width:100%; scale:50%; display:block; margin-left:auto; margin-right:auto; margin-top:-12%; margin-bottom: -12.5%">
 
 ## 数据来源
 
