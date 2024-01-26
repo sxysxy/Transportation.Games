@@ -123,20 +123,19 @@ if __name__ == "__main__":
     argps.add_argument("--ssl-cert", type=str, default=None, help="Path to SSL cert.pem")  # SSL证书文件
     argps.add_argument("--ssl-key", type=str, default=None, help="Path to SSL key.pem")    # SSL证书文件
     argps.add_argument("--sql-server", type=str, default="localhost:3306")
-    argps.add_argument("--sql-engine", type=str, default=None)
+    argps.add_argument("--sql-engine", type=str, default="mysql+pymysql")
     argps.add_argument("--sql-user", type=str, default=None)
     argps.add_argument("--sql-passwd", type=str, default=None)
     argps.add_argument("--sql-dbname", type=str, default="TransportationGame")
     
     args = argps.parse_args()
     
-    if not all([args.sql_engine, args.sql_user, args.sql_passwd]):
+    if not args.sql_user:
         print("Warning: Missing SQL configuration, some function is disabled.")
+        sql_path = None
     else:
-        # 创建引擎，连接到MySQL数据库，替换以下信息为你的MySQL连接信息
-        #sql_engine = create_engine('mysql+pymysql://user:password@localhost:3306/TransportationGames')
-        pass
-     
+        if not args.sql_passwd:
+            args.sql_passwd = ""
     
     if args.port is None:
         if args.product_env:
@@ -151,6 +150,9 @@ if __name__ == "__main__":
         if not all([args.ssl_cert, args.ssl_key]):
             print("[ABORTED] Error: --ssl-key or --ssl-cert is not set.")
             exit(1)
+            
+    if args.sql_user:
+        datamodel = DataModel(args.sql_engine, args.sql_server, args.sql_user, args.sql_passwd, args.sql_dbname)
     
     if not args.product_env: 
     

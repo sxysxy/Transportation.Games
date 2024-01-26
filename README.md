@@ -72,7 +72,7 @@ python main.py --product-env y
 <tr><td>--ssl-cert</td><td>cert.pem文件路径</td><td>空</td></tr>
 <tr><td>--ssl-key</td><td>key.pem文件路径</td><td>空</td></tr>
 <tr><td>--sql-server</td><td>SQL服务的地址:端口</td><td>localhost:3306</td></tr>
-<tr><td>--sql-engine</td><td>SQL引擎</td><td>mysql+pymysql</td></tr>
+<tr><td>--sql-engine</td><td>SQL引擎，例如'mysql+pymysql'、'mariadb+mariadbconnector'等</td><td>mysql+pymysql</td></tr>
 <tr><td>--sql-user</td><td>SQL用户名</td><td>空，需要指定</td></tr>
 <tr><td>--sql-passwd</td><td>SQL用户密码</td><td>空，需要指定</td></tr>
 <tr><td>--sql-dbname</td><td>SQL数据库库名</td><td>TransportationGame</td></tr>
