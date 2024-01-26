@@ -7,6 +7,10 @@ class BackendApp(App):
         if args.port is None:
             args.port = 12346
         super().__init__(args, template_folder="./backend_templates")
+
+        if self.datamodel is None:
+            raise RuntimeError("未能连接到SQL数据库，后台管理程序无法运行")
+            
         self.app.add_url_rule("/", view_func=self.backend)
         self.app.add_url_rule("/backend", view_func=self.backend)
         

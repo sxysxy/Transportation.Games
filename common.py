@@ -21,11 +21,9 @@ def get_args():
 class App:
     def __init__(self, args, **flask_options) -> None:
         app = flask.Flask("__main__", **flask_options)
-        if not args.sql_user:
-            print("Warning: Missing SQL configuration, some function is disabled.")
-        else:
-            if not args.sql_passwd:
-                args.sql_passwd = ""
+       
+        if not args.sql_passwd:
+            args.sql_passwd = ""
         
         if args.port is None:
             if args.product_env:
@@ -42,7 +40,10 @@ class App:
                 exit(1)
                 
         if args.sql_user:
-            self.datamodel = DataModel(args.sql_engine, args.sql_server, args.sql_user, args.sql_passwd, args.sql_dbname)
+            try:
+                self.datamodel = DataModel(args.sql_engine, args.sql_server, args.sql_user, args.sql_passwd, args.sql_dbname)
+            except:
+                self.datamodel = None
         else:
             self.datamodel = None
         

@@ -19,14 +19,19 @@ class EasyFileCache:
 class FrontendApp(App):
     def __init__(self, args) -> None:
         super().__init__(args)
+        if self.datamodel is None:
+            print("Warning: Missing SQL configuration, some function is disabled.")
+        
         self.app.add_url_rule("/", view_func=self.index)
         self.app.add_url_rule("/index", view_func=self.index)
         self.app.add_url_rule("/markdown_of_main_page", view_func=self.markdown_of_main_page)
         self.app.add_url_rule("/rank", view_func=self.rank)
         self.app.add_url_rule("/markdown_of_rank_page", view_func=self.markdown_of_rank_page)
+        self.app.add_url_rule("/nosqlerror", view_func=self.nosqlerror)
         self.app.add_url_rule("/upload", view_func=self.upload)
         self.app.add_url_rule("/login", view_func=self.login, methods=['GET', 'POST'])
         self.app.add_url_rule("/register", view_func=self.register)
+        
 
     def is_mobile():
         UA = str(flask.request.user_agent)
@@ -84,7 +89,13 @@ class FrontendApp(App):
     def markdown_of_rank_page(self):
         return self.get_markdown_content(RANK_PAGE_MARKDOWN_FILENAME)
 
+    def nosqlerror(self):
+        return flask.render_template("nosqlerror.html")
+
     def login(self):
+        if not self.datamodel:
+            return flask.redirect(flask.url_for('nosqlerror'))
+        
         if flask.request.method == 'POST':
 
             username = flask.request.form['username']
