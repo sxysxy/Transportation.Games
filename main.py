@@ -4,6 +4,7 @@ import os
 import argparse
 import secrets
 from datamodel import DataModel
+#from bs4 import BeautifulSoup
 
 my_secret_key = secrets.token_urlsafe(16)
 app = flask.Flask(__name__)
@@ -72,11 +73,28 @@ def register():
     email = flask.request.form['email']
     datamodel.registeruser(username, password, password2, email)
     return flask.redirect(flask.url_for('login'))
-# 主页
+
+# 美化Makrdown样式
+makrdown_css = '''
+table {
+    border : 1px solid black;   
+}
+'''
+
+def render_makrdown(markdown_source):
+    html = markdown2.markdown(markdown_source, extras=['tables'])
+    # soup = BeautifulSoup(html, 'html.parser')
+    # style_tag = soup.new_tag('style', 'text/css')
+    # style_tag.string = makrdown_css
+    # soup.append(style_tag)
+    # return str(soup)
+    return html
+    
+
 def get_markdown_content(filename):
     def loadf():
         with open(filename, "r",encoding="utf-8") as f:
-            content = markdown2.markdown(f.read())
+            content = render_makrdown(f.read())
             
         obj = EasyFileCache(filename, int(os.path.getmtime(filename)), content)
         return obj

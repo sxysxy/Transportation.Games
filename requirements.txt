@@ -4,3 +4,4 @@ pyopenssl
 gevent>=23.9
 SQLAlchemy
 pymysql
+bs4
