@@ -15,7 +15,7 @@ def get_args():
     argps.add_argument("--sql-engine", type=str, default="mysql+pymysql")
     argps.add_argument("--sql-user", type=str, default=None)
     argps.add_argument("--sql-passwd", type=str, default=None)
-    argps.add_argument("--sql-dbname", type=str, default="TransportationGame")
+    argps.add_argument("--sql-dbname", type=str, default="TransportationGames")
     return argps.parse_args()
 
 class App:

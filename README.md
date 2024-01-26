@@ -29,10 +29,6 @@ pip install -r requirements.txt
 CREATE DATABASE TransportationGames
     DEFAULT CHARACTER SET = 'utf8mb4';
 ```
-将main.py中创建引擎的相关信息替换为Mysql连接信息
-```
-engine = create_engine('mysql+pymysql://user:password@localhost:3306/TransportationGames')
-```
 
 ### 服务端程序运行
 
@@ -80,7 +76,7 @@ python main.py --product-env y
 <tr><td>--sql-engine</td><td>SQL引擎，例如'mysql+pymysql'、'mariadb+mariadbconnector'等</td><td>mysql+pymysql</td></tr>
 <tr><td>--sql-user</td><td>SQL用户名</td><td>空，需要指定</td></tr>
 <tr><td>--sql-passwd</td><td>SQL用户密码</td><td>空，需要指定</td></tr>
-<tr><td>--sql-dbname</td><td>SQL数据库库名</td><td>TransportationGame</td></tr>
+<tr><td>--sql-dbname</td><td>SQL数据库库名</td><td>TransportationGames</td></tr>
 </tbody>
 </table>
 
