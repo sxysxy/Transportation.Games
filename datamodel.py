@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Table, MetaData, Column, String, Index, Integer, PrimaryKeyConstraint
+from sqlalchemy import create_engine, Table, MetaData, Column, String, Index, Integer, PrimaryKeyConstraint, ForeignKey, Float, Date, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -10,9 +10,8 @@ class User(Base):
     # 表名
     __tablename__ = 'users'
     
-    # 列定义，包括主键（邮箱）、用户名、密码、确认密码、手机号、发布机构、模型名称
-    
-    userid = Column(Integer, primary_key=True)
+    # 列定义
+    userid = Column(String(32), primary_key=True)
     email = Column(String(64), nullable=False)
     username = Column(String(64), nullable=False)
     password = Column(String(64), nullable=False)
@@ -25,7 +24,31 @@ class User(Base):
        # Index('index_by_email', 'email')
     )  
     
+# 提交记录
+class Record(Base):
+    __tablename__ = 'records'
     
+    record_id = Column('record_id', Integer, primary_key=True, autoincrement=True)
+    verified = Column(Boolean, nullable=False, default=False)
+    userid =  Column(String(32), ForeignKey("users.userid"), index=True,)
+    model_name = Column(String(128), nullable=False)
+    score_t1 = Column(Float, nullable=True)
+    score_t2 = Column(Float, nullable=True)
+    score_t3 = Column(Float, nullable=True)
+    score_t4 = Column(Float, nullable=True)
+    score_t5 = Column(Float, nullable=True)
+    score_t6 = Column(Float, nullable=True)
+    score_t7 = Column(Float, nullable=True)
+    score_t8 = Column(Float, nullable=True)
+    score_t9 = Column(Float, nullable=True)
+    score_t10 = Column(Float, nullable=True)
+    
+    
+    __table_args__ = (
+        PrimaryKeyConstraint('record_id', name='record_id_pk'),
+        Index('records_index', "userid", "record_id"), 
+    )
+     
 class DataModel:
     def __init__(self, sql_engine_name, sql_server, sql_username, sql_password, sql_dbname) -> None:
         if ':' in sql_server:
