@@ -36,6 +36,8 @@ engine = create_engine('mysql+pymysql://user:password@localhost:3306/Transportat
 
 ### 服务端程序运行
 
+服务端程序有两个，main.py为主站的程序，backend.py为后台管理界面的程序。主站和后台管理界面程序是分开的，但是可以共用一个数据库。以main.py为例:
+
 在开发与调试环境下：
 
 ```
@@ -52,6 +54,7 @@ python main.py --product-env y
 
 指定该参数则会使用gevent.monkey.patch_all()和WSGIServer来提高Flask App的性能。默认的端口也会变成80或者443（取决于你是否开启了HTTPS支持）
 
+注意，实际上还需要指定数据库的参数，否则登录、后台管理等功能无法正常使用，仅能够浏览主页index.html
 
 # 内容定制
 
@@ -59,6 +62,8 @@ python main.py --product-env y
 为排行榜添加文本内容：在排行榜Markdown.md里直接编辑
 
 # 程序命令行参数
+
+以下命令行参数，main.py与backend.py通用。main.py启动主站服务，backend.py启动后台管理网站服务。
 
 <table border=1, style="width:100%">
 <thead>

@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, Table, MetaData, Column, String, Index, Integer, PrimaryKeyConstraint, ForeignKey, Float, Date, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import sqlalchemy
 
 #声明基类，所有的实体类都应该继承自Base
 Base = declarative_base()
@@ -43,11 +44,17 @@ class Record(Base):
     score_t9 = Column(Float, nullable=True)
     score_t10 = Column(Float, nullable=True)
     
-    
     __table_args__ = (
         PrimaryKeyConstraint('record_id', name='record_id_pk'),
-        Index('records_index', "userid", "record_id"), 
+        Index('records_index', "record_id"), 
     )
+    
+class Statistic(Base):
+    __tablename__ = 'statistic'
+    
+    name = Column(String(32), primary_key=True)
+    value_int = Column(Integer, default=0, nullable=True)
+    value_str = Column(String(256), default="", nullable=True)
      
 class DataModel:
     def __init__(self, sql_engine_name, sql_server, sql_username, sql_password, sql_dbname) -> None:
@@ -102,3 +109,29 @@ class DataModel:
         
     def user_check_id_available(self, userid):
         return self.session.query(User).filter_by(userid=userid).first() is None
+    
+    
+    # def record_add(self, **record_info):
+    #     pass 
+    
+    # def record_delete(self, record_id):
+    #     pass
+    
+    def backend_get_num_users(self):
+        return self.session.query(User).count()
+    
+    def backend_stat_int_get(self, var_name):
+        x = self.session.execute(sqlalchemy.select("*").select_from(Statistic).filter_by(name=var_name)).first()
+        if x is None:
+            self.session.add(Statistic(name=var_name, value_int=0))
+            self.session.commit()
+            return 0
+        else:
+            return x.value_int
+        
+    def backend_stat_int_add(self, var_name, add_value):
+        v = self.backend_stat_int_get(var_name)
+        self.session.query(Statistic).filter_by(name=var_name).update({Statistic.value_int : v + add_value})
+        self.session.commit()
+    
+    
