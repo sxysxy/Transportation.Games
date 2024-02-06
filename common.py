@@ -16,6 +16,7 @@ def get_args():
     argps.add_argument("--sql-user", type=str, default=None)
     argps.add_argument("--sql-passwd", type=str, default=None)
     argps.add_argument("--sql-dbname", type=str, default="TransportationGames")
+    argps.add_argument("--icp-license", type=str, default=None)
     return argps.parse_args()
 
 class App:
@@ -42,8 +43,10 @@ class App:
         if args.sql_user:
             try:
                 self.datamodel = DataModel(args.sql_engine, args.sql_server, args.sql_user, args.sql_passwd, args.sql_dbname)
-            except:
+                self.sql_exception = None
+            except Exception as e:
                 self.datamodel = None
+                self.sql_exception = e
         else:
             self.datamodel = None
         

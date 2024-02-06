@@ -26,12 +26,19 @@
                 $("#main_page_content").ready(function(){
                     $("#main_page_content").load("/markdown_of_main_page");
                     $("#main_page_content").css("margin-top", $("#menubar").height() * 1.1 );
-                    $("#main_page_content").css("margin-bottom", "4em" );
+                    $("#main_page_content").css("margin-bottom", "2em" );
                 });
             </script>
         </div>
         <!-- 主页内容 结束 -->   
-        
+
+        <!-- 底栏开始 -->
+        <div id="page_footer" style="width:100%"></div>
+        <script type="text/javascript">
+            $("#page_footer").load("/footer")
+            $("#page1").height()
+        </script>
+        <!-- 底栏结束 -->
     </body>
 
      

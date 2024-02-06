@@ -77,6 +77,7 @@ python main.py --product-env y
 <tr><td>--sql-user</td><td>SQL用户名</td><td>空，需要指定</td></tr>
 <tr><td>--sql-passwd</td><td>SQL用户密码</td><td>空，需要指定</td></tr>
 <tr><td>--sql-dbname</td><td>SQL数据库库名</td><td>TransportationGames</td></tr>
+<tr><td>--icp-license</td><td>字符串，按照 某ICP备XXXXXXXX号 的格式（位数不一定）</td><td>空，如果不指定，则不显示icp备案信息</td></tr>
 </tbody>
 </table>
 

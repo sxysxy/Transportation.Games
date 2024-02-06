@@ -22,9 +22,12 @@ class FrontendApp(App):
         super().__init__(args)
         if self.datamodel is None:
             print("Warning: Missing SQL configuration, some function is disabled.")
+            print(f"SQL Exception:\n{self.sql_exception}")
+        self._icp_license = args.icp_license
         
         self.app.add_url_rule("/", view_func=self.index)
         self.app.add_url_rule("/index", view_func=self.index)
+        self.app.add_url_rule("/footer", view_func=self.footer)
         self.app.add_url_rule("/markdown_of_main_page", view_func=self.markdown_of_main_page)
         self.app.add_url_rule("/rank", view_func=self.rank)
         self.app.add_url_rule("/markdown_of_rank_page", view_func=self.markdown_of_rank_page)
@@ -35,10 +38,15 @@ class FrontendApp(App):
         self.app.add_url_rule("/get_main_stat", view_func=self.get_main_stat)
         self.app.add_url_rule("/get_rank_stat", view_func=self.get_rank_stat)
         
+        self.app.add_url_rule("/icp_license", view_func=self.icp_license)
+        
     @staticmethod
     def is_mobile():
         UA = str(flask.request.user_agent)
         return 'Android' in UA or 'iPhone' in UA
+    
+    def icp_license(self):
+        return str(self._icp_license)
 
     def index(self):
         if self.datamodel:
@@ -49,6 +57,9 @@ class FrontendApp(App):
         if self.datamodel:
             self.datamodel.backend_stat_int_add("view_rank", 1)
         return flask.render_template("rank.html", is_mobile=self.is_mobile())
+    
+    def footer(self):
+        return flask.render_template("footer.html")
     
     def get_page_stat(self, var_name, filename):
         dt = time.localtime(os.path.getmtime(filename))
