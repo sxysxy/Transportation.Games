@@ -24,6 +24,7 @@ class FrontendApp(App):
             print("Warning: Missing SQL configuration, some function is disabled.")
             print(f"SQL Exception:\n{self.sql_exception}")
         self._icp_license = args.icp_license
+        self.enable_ssl = args.enable_ssl
         
         self.app.add_url_rule("/", view_func=self.index)
         self.app.add_url_rule("/index", view_func=self.index)
@@ -37,8 +38,10 @@ class FrontendApp(App):
         self.app.add_url_rule("/register", view_func=self.register)
         self.app.add_url_rule("/get_main_stat", view_func=self.get_main_stat)
         self.app.add_url_rule("/get_rank_stat", view_func=self.get_rank_stat)
-        
         self.app.add_url_rule("/icp_license", view_func=self.icp_license)
+        
+        if self.enable_ssl:
+            self.app.before_request(self.before_request_enforce_ssl)
         
     @staticmethod
     def is_mobile():
@@ -47,6 +50,11 @@ class FrontendApp(App):
     
     def icp_license(self):
         return str(self._icp_license)
+    
+    def before_request_enforce_ssl(self):
+        if self.enable_ssl and flask.request.url.startswith('http://'):
+            url = flask.request.url.replace('http://', 'https://', 1)
+            return flask.redirect(url, code=301)
 
     def index(self):
         if self.datamodel:
