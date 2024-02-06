@@ -35,7 +35,7 @@ class FrontendApp(App):
         self.app.add_url_rule("/get_main_stat", view_func=self.get_main_stat)
         self.app.add_url_rule("/get_rank_stat", view_func=self.get_rank_stat)
         
-
+    @staticmethod
     def is_mobile():
         UA = str(flask.request.user_agent)
         return 'Android' in UA or 'iPhone' in UA
