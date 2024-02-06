@@ -17,6 +17,8 @@ def get_args():
     argps.add_argument("--sql-passwd", type=str, default=None)
     argps.add_argument("--sql-dbname", type=str, default="TransportationGames")
     argps.add_argument("--icp-license", type=str, default=None)
+    argps.add_argument("--forward-http2https", type=lambda x : x in ['y', 'Y'], default=False, help="Whether to forward http to https(valid when --enbale-ssl is enabled)")
+    argps.add_argument("--forward-http-port", type=int, default=80)
     return argps.parse_args()
 
 class App:

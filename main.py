@@ -5,6 +5,8 @@ from datamodel import DataModel
 import json
 from common import get_args, App
 import time
+import sys
+import signal
 
 MAIN_PAGE_MARKDOWN_FILENAME = "./主页Markdown.md"
 RANK_PAGE_MARKDOWN_FILENAME = "./排行榜Markdown.md"
@@ -160,7 +162,35 @@ class FrontendApp(App):
 
 
 if __name__ == "__main__":
-    FrontendApp(get_args()).run()
+    args = get_args()
+    
+    if (('darwin' in sys.platform) or ('linux' in sys.platform)) and args.enable_ssl and args.forward_http2https:
+        pid = os.fork()
+        if pid != 0:
+            def signal_handler(s, f):
+                os.kill(pid, signal.SIGKILL)
+                exit(0)
+                
+            signal.signal(signal.SIGINT, signal_handler)
+            FrontendApp(args).run()
+        else:
+            # 子进程启动HTTP对HTTPS的转发
+            rediect_app = flask.Flask(__name__)
+            @rediect_app.route("/")
+            def rediect():
+                url = flask.request.url.replace('http://', 'https://', 1)
+                if args.port == 443:
+                    url = url.replace(f":{args.forward_http_port}", "", 1)
+                else:
+                    url = url.replace(f":{args.forward_http_port}", f":{args.port}", 1)
+                return flask.redirect(url, code=301)
+            
+            from gevent import pywsgi, monkey
+            monkey.patch_all()
+            pywsgi.WSGIServer((args.host, args.forward_http_port), rediect_app).serve_forever()
+    else:
+        FrontendApp(args).run()
+    
         
        
         
