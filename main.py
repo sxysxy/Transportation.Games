@@ -1,9 +1,10 @@
 import flask
 import markdown2
 import os
-import secrets
 from datamodel import DataModel
+import json
 from common import get_args, App
+import time
 
 MAIN_PAGE_MARKDOWN_FILENAME = "./主页Markdown.md"
 RANK_PAGE_MARKDOWN_FILENAME = "./排行榜Markdown.md"
@@ -31,6 +32,8 @@ class FrontendApp(App):
         self.app.add_url_rule("/upload", view_func=self.upload)
         self.app.add_url_rule("/login", view_func=self.login, methods=['GET', 'POST'])
         self.app.add_url_rule("/register", view_func=self.register)
+        self.app.add_url_rule("/get_main_stat", view_func=self.get_main_stat)
+        self.app.add_url_rule("/get_rank_stat", view_func=self.get_rank_stat)
         
 
     def is_mobile():
@@ -40,18 +43,36 @@ class FrontendApp(App):
     def index(self):
         if self.datamodel:
             self.datamodel.backend_stat_int_add("view_main", 1)
-        return flask.render_template("index.html")
+        return flask.render_template("index.html", is_mobile=self.is_mobile())
     
     def rank(self):
         if self.datamodel:
             self.datamodel.backend_stat_int_add("view_rank", 1)
-        return flask.render_template("rank.html")
+        return flask.render_template("rank.html", is_mobile=self.is_mobile())
     
-    def upload(self):
-        if 'logged_in' in flask.session and flask.session['logged_in']:
-            return flask.render_template("upload.html")
+    def get_page_stat(self, var_name, filename):
+        dt = time.localtime(os.path.getmtime(filename))
+        if self.datamodel:
+            n = self.datamodel.backend_stat_int_get(var_name)
         else:
-            return flask.render_template("login.html")
+            n = 0
+        return json.dumps({
+            "num" : n,
+            "mtime" : time.strftime("最后更新时间: %Y年%m月%d日 %H:%M:%S", dt)
+        })
+        
+    def get_main_stat(self):
+        return self.get_page_stat("view_main", MAIN_PAGE_MARKDOWN_FILENAME)
+    
+    def get_rank_stat(self):
+        return self.get_page_stat("view_rank", RANK_PAGE_MARKDOWN_FILENAME)
+            
+    def upload(self):
+        return flask.render_template("/building.html", is_mobile=self.is_mobile)
+        # if 'logged_in' in flask.session and flask.session['logged_in']:
+        #     return flask.render_template("upload.html")
+        # else:
+        #     return flask.render_template("login.html")
         
     # 美化Makrdown样式
     makrdown_css = '''

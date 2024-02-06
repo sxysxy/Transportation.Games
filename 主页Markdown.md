@@ -1,5 +1,13 @@
 # TransportationGames
 
+<div id="view_stat_of_main_page" stype="width: 100%;"></div>
+<script type="text/javascript">
+      $.get("/get_main_stat", function(data){
+            var st = JSON.parse(data);
+            $("#view_stat_of_main_page").html("<font color=\"#9f9f9f\">"+"浏览数:" + st.num + "&nbsp;&nbsp;&nbsp;&nbsp;" + st.mtime+"</font>");
+      });
+</script>
+
 ---
 
 想知道你的模型在交通领域的任务上表现如何吗？快来通关**TransportationGames**吧！

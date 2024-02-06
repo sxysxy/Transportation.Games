@@ -1,3 +1,15 @@
+# 排行榜
+
+<div id="view_stat_of_rank_page" stype="width: 100%;"></div>
+<script type="text/javascript">
+      $.get("/get_rank_stat", function(data){
+            var st = JSON.parse(data);
+            $("#view_stat_of_rank_page").html("<font color=\"#9f9f9f\">"+"浏览数:" + st.num + "&nbsp;&nbsp;&nbsp;&nbsp;" + st.mtime+"</font>");
+      });
+</script>
+
+---
+
 ### 语言大模型排行榜
 
 ---
