@@ -2,7 +2,7 @@ template_with_SSL = '''
 # HTTP Server - Redirect all requests to HTTPS
 server {
     listen 80;
-    server_name transportation.games;
+    server_name %s;
     
     # Redirect all HTTP requests to HTTPS
     return 301 https://$host$request_uri;
@@ -11,15 +11,15 @@ server {
 # HTTPS Server
 server {
     listen 443 ssl;
-    server_name {};
+    server_name %s;
 
     # SSL Configuration - Replace with your cert and private key
-    ssl_certificate {};
-    ssl_certificate_key {};
+    ssl_certificate %s;
+    ssl_certificate_key %s;
 
     # Proxy settings
     location / {
-        proxy_pass https://localhost:{};
+        proxy_pass https://localhost:%d;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     if args.enable_ssl:
         if not all([args.ssl_cert, args.ssl_key]):
             print("Plase set --ssl-crt and --ssl-key")
-        conf = template_with_SSL % (args.server_name, args.ssl_cert, args.ssl_key, args.local_service_port)
+        conf = template_with_SSL % (args.server_name, args.server_name, args.ssl_cert, args.ssl_key, args.local_service_port)
     else:
         conf = template_without_SSL % (args.server_name, args.local_service_port)
     with open("nginx.conf", "w") as f:
