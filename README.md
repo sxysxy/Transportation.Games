@@ -1,6 +1,8 @@
 # Transportation.Games
 论文 <a href="https://arxiv.org/abs/2401.04471">TransportationGames: Benchmarking Transportation Knowledge of Multimodal Large Language Models</a> 的宣传网站的源代码
 
+[toc]
+
 # 下载&安装
 
 ```
@@ -30,6 +32,8 @@ CREATE DATABASE TransportationGames
     DEFAULT CHARACTER SET = 'utf8mb4';
 ```
 
+数据库名字也可以用别的，可以对main.py的命令行参数--sql-dbname做修改实现，可以但没必要= =。
+
 ### 服务端程序运行
 
 服务端程序有两个，main.py为主站的程序，backend.py为后台管理界面的程序。主站和后台管理界面程序是分开的，但是可以共用一个数据库。以main.py为例:
@@ -37,20 +41,27 @@ CREATE DATABASE TransportationGames
 在开发与调试环境下：
 
 ```
-python main.py
+python main.py --sql-user 你的sql用户名 --sql-passwd 你的sql的密码
 ```
 
 默认网络端口是12345
 
-如果是生产环境中：
+如果是生产环境中则可以加入下面这个参数：
 
 ```
-python main.py --product-env y
+--product-env y
 ```
 
 指定该参数则会使用gevent.monkey.patch_all()和WSGIServer来提高Flask App的性能。默认的端口也会变成80或者443（取决于你是否开启了HTTPS支持）
 
-注意，实际上还需要指定数据库的参数，否则登录、后台管理等功能无法正常使用，仅能够浏览主页index.html
+以及如果公开发布网站
+
+```
+--icp-license 某ICP备XXXXXXXXXX号
+```
+
+可以在网页底部显示ICP号。
+
 
 # 内容定制
 
@@ -78,8 +89,49 @@ python main.py --product-env y
 <tr><td>--sql-passwd</td><td>SQL用户密码</td><td>空，需要指定</td></tr>
 <tr><td>--sql-dbname</td><td>SQL数据库库名</td><td>TransportationGames</td></tr>
 <tr><td>--icp-license</td><td>字符串，按照 某ICP备XXXXXXXX号 的格式（位数不一定）</td><td>空，如果不指定，则不显示icp备案信息</td></tr>
+<tr><td>--forward-http2https</td><td>是否开启HTTP到HTTPS的自动重定向服务。这个选项只在服务器为Linux/MacOS时有效，windows上不起作用。开启添加参数--forward-http2https y即可。这个参数也需要--enable-ssl y才有效。</td><td>默认关闭</td><td></td></tr>
+<tr><td>--forward-http-port</td><td>在开启SSL支持的时候如果同时开启了HTTP访问对HTTPS的重定向，则这里指定HTTP服务使用的端口号。</td><td>80</td></tr>
 </tbody>
 </table>
+
+# 使用其他数据库
+
+实测mysql、Linux上的mariadb无需修改运行命令行参数
+
+在macos上使用mariadb则需要pip安装mariadb包并且添加命令行参数
+
+```
+--sql-engine "mariadb+mariadbconnector"
+```
+
+其他的SQL数据库实现请查询SQLAlchemy的文档。
+
+
+# HTTPS访问支持
+
+需要获得证书和密钥文件，加入参数
+
+```
+--enable-ssl y --ssl-cert 证书文件 --ssl-key 密钥文件
+```
+
+就可以开启HTTPS访问，同时不支持HTTP访问。
+
+如果需要开启HTTP到HTTPS的重定向，可以添加参数
+
+```
+--forward-http2https y --forward-http-port 80
+```
+
+80是默认http服务所用端口，如果你是用的不是80就替换掉
+
+# Nginx
+
+当然也可以配合nginx使用，并且项目中有一个generate_nginx_conf.py帮助生成nginx配置，因为代码很简单可以直接打开看看不详细介绍。
+
+# 其他
+
+项目的.gitignore中有SSLCerts文件夹，nginx.conf，start_website.sh，所以可以自己编写start_website.sh来添加命令行参数启动网页服务，SSLCerts文件夹内存放SSL证书等。
 
 # 开源软件协议
 
