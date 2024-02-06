@@ -1,3 +1,4 @@
 *.pem
 .DS_Store
 __pycache__
+start_website.sh
