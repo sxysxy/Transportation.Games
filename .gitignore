@@ -3,3 +3,4 @@
 __pycache__
 start_website.sh
 SSLCerts
+nginx.conf
