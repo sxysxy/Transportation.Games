@@ -1,5 +1,5 @@
 # Transportation.Games
-论文 <a href="https://arxiv.org/abs/2401.04471">TransportationGames: Benchmarking Transportation Knowledge of Multimodal Large Language Models</a> 的宣传网站的源代码
+论文 <a href="https://arxiv.org/abs/2401.04471">TransportationGames: Benchmarking Transportation Knowledge of Multimodal Large Language Models</a> 的宣传网站的源代码。易于定制自己的内容，可以当做一个模板套用到其他类似的项目上。
 
 <div style="font-size:32px">目录</div>
 
