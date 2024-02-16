@@ -10,7 +10,7 @@
 
 ---
 
-想知道你的模型在交通领域的任务上表现如何吗？快来通关**TransportationGames**<a href="https://arxiv.org/abs/2401.04471">[arXiv 2401.04471]</a>吧！
+想知道你的模型在交通领域的任务上表现如何吗？快来通关**TransportationGames**吧！
 
 **TransportationGames**是一个交通领域的benchmark，用来测评模型对交通领域知识的记忆、理解和应用能力。通过综合考虑不同的交通场景（如城市交通、轨道交通、航空、航运等）、不同的受众群体（如社会公众、交通行业从业者等）以及充分结合实际生活中的应用实例，我们共挑选了10个任务构建了TransportationGames数据集，根据能力类别分类包含如下任务：记忆能力（交通概念问答/交通规则问答/交通标志问答）、理解能力（交通事故分析/交通公众舆情分析/交通安全建议/交通标志错误检测/道路占用监测）、应用能力（交通应急预案生成/交通安全教育文案生成）。不同的任务根据实际应用场景除了文本模态外可能还包含图片模态的输入信息。（请注意，目前我们只针对中文场景，后续我们将继续扩充评测数据，同时添加更多的评测任务。）
 
@@ -72,23 +72,5 @@
 
 ---
 
-Email：{23111135, 22120416, 20241254, 20281284}@bjtu.edu.cn
+Email：稍后开放，请耐心等待...
 
-## 论文引用格式
-
-<div style="width:100%; height:auto; overflow:hidden; background-color: #f5f7f9" >
-<pre style="margin:4px">
-@misc{zhang2024transportationgames,
-      title={TransportationGames: Benchmarking Transportation Knowledge of (Multimodal) Large Language Models}, 
-      author={Xue Zhang and Xiangyu Shi and Xinyue Lou and Rui Qi and Yufeng Chen and Jinan Xu and Wenjuan Han},
-      year={2024},
-      eprint={2401.04471},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
-}
-</pre>
-</div>
-
-## 网页模板源代码
-
-这个网站的源代码也是公开的，主页和排行榜等页面是可以编写markdown定制的。详情见<a href="https://github.com/sxysxy/Transportation.Games">https://github.com/sxysxy/Transportation.Games</a>
